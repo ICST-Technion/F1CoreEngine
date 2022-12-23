@@ -15,11 +15,11 @@ class Logger:
 
     @staticmethod
     def get_random_state_estimation():
-        return to_gRPC(StateEstimation.StateEstimation.get_random())
+        return to_gRPC(StateEstimation.StateEstimationRandomizer.get_random())
 
     @staticmethod
     def get_random_contol():
-        return to_gRPC(Control.Control.get_random())
+        return to_gRPC(Control.ControlRandomizer.get_random())
 
 
 
