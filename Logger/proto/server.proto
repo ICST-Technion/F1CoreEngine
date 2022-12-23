@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+import "common.proto";
+
+message ExitMessage {
+}
+
+message ConnectionApproved {
+}
+
+message SwitchToASOff {
+}
+
+message SwitchToASDReady {
+    Mission mission = 1;
+}
+
+message SwitchToASDriving {
+}
+
+message SwitchToASFinished {
+}
+
+message SwitchToASEmergency {
+}
+
+message FinishedControlLap {
+}
+
+message FinishedFinalLap {
+}

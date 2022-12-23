@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+import "common.proto";
+
+enum ConeType {
+    UnknownType = 0;
+    Yellow = 1;
+    Blue = 2;
+    Orange = 3;
+    OrangeBig = 4;
+}
+
+message FramePosition { 
+    uint32 u = 1;       
+    uint32 v = 2;
+    uint64 depth = 3;
+}
+
+message Cone {
+    uint32 cone_id = 1;
+    // Relative ego ENU
+    double x = 2; /// East (Right)
+    double y = 3; /// North (Forward)
+    double z = 4; /// Up
+    ConeType type = 5;
+    float confidence = 6;
+}
+
+message BoundingBox
+{
+    uint32 cone_id = 1;
+    ConeType type = 2;
+    float height = 3; /// box height in meters
+    float width = 4; /// box width in meters
+    float length = 5; /// box width in meters
+    FramePosition frame_position = 6;
+    Vector3D position = 7;  /// For ground truth mostly
+}
+
+message ConeMap
+{
+    repeated Cone cones = 1;
+}

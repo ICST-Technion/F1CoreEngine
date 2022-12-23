@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+import "perception.proto";
+import "state_est.proto";
+import "sensors.proto";
+import "common.proto";
+
+message GroundTruth
+{
+    uint32 frame_number = 1;
+	StateGroundTruth state_ground_truth = 2;
+	PerceptionGroundTruth perception_ground_truth = 3;
+}
+
+message StateGroundTruth
+{
+	bool has_position_truth = 1;
+	Vector3D position = 2;
+	bool has_car_measurments_truth = 3;
+	CarMeasurments car_measurments = 4;
+	bool has_imu_measurments_truth = 5;
+	IMUMeasurments imu_measurments = 6;
+	bool has_cones_truth = 7;
+	repeated StateCone cones = 8;
+}
+
+message PerceptionGroundTruth
+{
+	bool has_bounding_boxes_truth = 1;
+	repeated BoundingBox bbs = 2;
+}
