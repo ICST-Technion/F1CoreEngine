@@ -25,9 +25,3 @@ message StateGroundTruth
 	bool has_cones_truth = 7;
 	repeated StateCone cones = 8;
 }
-
-message PerceptionGroundTruth
-{
-	bool has_bounding_boxes_truth = 1;
-	repeated BoundingBox bbs = 2;
-}

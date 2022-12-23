@@ -43,3 +43,9 @@ message ConeMap
 {
     repeated Cone cones = 1;
 }
+
+message PerceptionGroundTruth
+{
+	bool has_bounding_boxes_truth = 1;
+	repeated BoundingBox bbs = 2;
+}
