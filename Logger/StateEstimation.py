@@ -7,23 +7,29 @@ import random
 from math import pi
 
 import state_est_pb2 as state_estimation
+from SmartRandomizer import SmartRandomizer
 
 
 class CarStateRandomizer:
+    proximityRandomizer = SmartRandomizer(
+        [(random.uniform, 0, 2 * pi), (random.uniform, 0, 2 * pi), (random.uniform, 0, 2 * pi),
+         (random.uniform, -1, 1)])
+
     @staticmethod
     def get_random():
+        randomList = CarStateRandomizer.proximityRandomizer.getRandom()
         car_state = state_estimation.CarState()
         car_state.position.CopyFrom(common.Vector2DRandomizer.get_random())
         car_state.position_deviation.CopyFrom(common.Vector2DRandomizer.get_random())
         car_state.velocity.CopyFrom(common.Vector2DRandomizer.get_random())
         car_state.velocity_deviation.CopyFrom(common.Vector2DRandomizer.get_random())
-        car_state.theta = random.uniform(0, 2 * pi)
+        car_state.theta = randomList[0]
         car_state.theta_deviation = random.uniform(0, 2 * pi)
-        car_state.theta_dot = random.uniform(0, 2 * pi)
+        car_state.theta_dot = randomList[1]
         car_state.theta_dot_deviation = random.uniform(0, 2 * pi)
-        car_state.steering_angle = random.uniform(0, 2 * pi)
+        car_state.steering_angle = randomList[2]
         car_state.steering_angle_deviation = random.uniform(0, 2 * pi)
-        car_state.acceleration = random.uniform(-1, 1)
+        car_state.acceleration = randomList[3]
         car_state.acceleration_deviation = random.uniform(-1, 1)
         return car_state
 
@@ -59,8 +65,11 @@ class StateConeRandomizer:
 
 
 class FormulaStateRandomizer:
+    proximityRandomizer = SmartRandomizer([(random.uniform, 0, 100), (random.uniform, 0, 100), (random.uniform, 0, 100),
+                                           (random.uniform, 0, 2 * pi)])
     @staticmethod
     def get_random():
+        randomList = FormulaStateRandomizer.proximityRandomizer.getRandom()
         formula_state = state_estimation.FormulaState()
         for i in range(0, random.randint(1, 10)):
             formula_state.right_bound_cones.append(StateConeRandomizer.get_random())
@@ -69,12 +78,12 @@ class FormulaStateRandomizer:
             formula_state.left_bound_cones.append(StateConeRandomizer.get_random())
 
         formula_state.current_state.CopyFrom(CarStateRandomizer.get_random())
-        formula_state.distance_to_finish = random.uniform(0, 100)  # this is just a guess
+        formula_state.distance_to_finish = randomList[0]  # this is just a guess
         formula_state.message_type = FormulaStateMessageTypeRandomizer.get_random()
 
-        formula_state.distance_from_left = random.uniform(0, 100)  # this is just a guess
-        formula_state.distance_from_right = random.uniform(0, 100)  # this is just a guess
-        formula_state.road_angle = random.uniform(0, 2 * pi)
+        formula_state.distance_from_left = randomList[1]  # this is just a guess
+        formula_state.distance_from_right = randomList[2]  # this is just a guess
+        formula_state.road_angle = randomList[3]
         return formula_state
 
 

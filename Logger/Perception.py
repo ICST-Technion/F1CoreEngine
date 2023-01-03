@@ -4,6 +4,7 @@ import random
 
 import perception_pb2 as perception
 import Common as common
+from SmartRandomizer import SmartRandomizer
 
 
 class ConeTypeRandomizer():
@@ -13,13 +14,16 @@ class ConeTypeRandomizer():
 
 
 class ConeRandomizer:
+    proximityRandomizer = SmartRandomizer([(random.uniform, -1, 1), (random.uniform, -1, 1), (random.uniform, -1, 1)])
+
     @staticmethod
     def get_random():
+        randomList = ConeRandomizer.proximityRandomizer.getRandom()
         cone = perception.Cone()
         cone.cone_id = random.randint(0, 100)  # this is just a guess
-        cone.x = random.uniform(-1, 1)
-        cone.y = random.uniform(-1, 1)
-        cone.z = random.uniform(-1, 1)
+        cone.x = randomList[0]
+        cone.y = randomList[1]
+        cone.z = randomList[2]
         cone.type = ConeTypeRandomizer.get_random()
         cone.confidence = random.random()
         return cone
