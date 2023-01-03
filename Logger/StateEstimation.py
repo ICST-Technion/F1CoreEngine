@@ -15,14 +15,18 @@ class CarStateRandomizer:
         [(random.uniform, 0, 2 * pi), (random.uniform, 0, 2 * pi), (random.uniform, 0, 2 * pi),
          (random.uniform, -1, 1)])
 
+    positionRandomizer = common.Vector2DRandomizer(proximity=True)
+    positionDeviationRandomizer = common.Vector2DRandomizer()
+    velocityRandomizer = common.Vector2DRandomizer(proximity=True)
+    velocityDeviationRandomizer = common.Vector2DRandomizer()
     @staticmethod
     def get_random():
         randomList = CarStateRandomizer.proximityRandomizer.getRandom()
         car_state = state_estimation.CarState()
-        car_state.position.CopyFrom(common.Vector2DRandomizer.get_random())
-        car_state.position_deviation.CopyFrom(common.Vector2DRandomizer.get_random())
-        car_state.velocity.CopyFrom(common.Vector2DRandomizer.get_random())
-        car_state.velocity_deviation.CopyFrom(common.Vector2DRandomizer.get_random())
+        car_state.position.CopyFrom(CarStateRandomizer.positionRandomizer.get_random())
+        car_state.position_deviation.CopyFrom(CarStateRandomizer.positionDeviationRandomizer.get_random())
+        car_state.velocity.CopyFrom(CarStateRandomizer.velocityRandomizer.get_random())
+        car_state.velocity_deviation.CopyFrom(CarStateRandomizer.velocityDeviationRandomizer.get_random())
         car_state.theta = randomList[0]
         car_state.theta_deviation = random.uniform(0, 2 * pi)
         car_state.theta_dot = randomList[1]
@@ -51,13 +55,15 @@ class FormulaStateMessageTypeRandomizer(Enum):
 
 
 class StateConeRandomizer:
+    positionRandomizer = common.Vector2DRandomizer()
+
     @staticmethod
     def get_random():
         state_cone = state_estimation.StateCone()
         state_cone.cone_id = random.randint(0, 100)  # this is just a guess
         state_cone.r = random.uniform(0, 100)  # this is just a guess
         state_cone.alpha = random.uniform(0, 2 * pi)
-        state_cone.position.CopyFrom(common.Vector2DRandomizer.get_random())
+        state_cone.position.CopyFrom(StateConeRandomizer.positionRandomizer.get_random())
         state_cone.type = perception.ConeTypeRandomizer.get_random()
         state_cone.position_deviation = random.uniform(-1, 1)  # this is just a guess
         state_cone.cluster_info.CopyFrom(ClusterInfoRandomizer.get_random())

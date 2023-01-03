@@ -49,6 +49,8 @@ class FramePositionRandomizer:
 
 
 class BoundingBoxRandomizer:
+
+    positionRandomizer = common.Vector3DRandomizer(proximity=True)
     @staticmethod
     def get_random():
         boundingBox = perception.BoundingBox()
@@ -58,7 +60,7 @@ class BoundingBoxRandomizer:
         boundingBox.width = random.random()
         boundingBox.length = random.random()
         boundingBox.frame_position.CopyFrom(FramePositionRandomizer.get_random())
-        boundingBox.position.CopyFrom(common.Vector3DRandomizer.get_random())
+        boundingBox.position.CopyFrom(BoundingBoxRandomizer.positionRandomizer.get_random())
         return boundingBox
 
 
