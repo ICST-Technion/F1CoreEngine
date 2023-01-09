@@ -8,6 +8,7 @@ from math import pi
 
 import state_est_pb2 as state_estimation
 from SmartRandomizer import SmartRandomizer
+from Logger import Logger
 
 
 class CarStateRandomizer:
@@ -100,4 +101,5 @@ class StateEstimationRandomizer:
     @staticmethod
     def get_random():
         formula_state = FormulaStateRandomizer.get_random()
-        return StateEstimationRandomizer(formula_state)
+        stateEstimation = StateEstimationRandomizer(formula_state)
+        Logger.log(stateEstimation)
