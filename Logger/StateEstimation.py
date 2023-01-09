@@ -94,12 +94,11 @@ class FormulaStateRandomizer:
         return formula_state
 
 
-class StateEstimationRandomizer:
+class StateEstimation:
     def __init__(self, formula_state):
         self.formula_state = formula_state
 
     @staticmethod
     def get_random():
         formula_state = FormulaStateRandomizer.get_random()
-        stateEstimation = StateEstimationRandomizer(formula_state)
-        Logger.log(stateEstimation)
+        Logger.log(StateEstimation(formula_state))
