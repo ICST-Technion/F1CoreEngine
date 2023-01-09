@@ -26,5 +26,4 @@ class Control:
     @staticmethod
     def send_message():
         drive_instructions = DriveInstructionsRandomizer.get_random()
-        control = Control(drive_instructions)
-        Logger.log(control)
+        Logger.log(Control(drive_instructions))
