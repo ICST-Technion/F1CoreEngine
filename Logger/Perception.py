@@ -5,6 +5,7 @@ import random
 import perception_pb2 as perception
 import Common as common
 from SmartRandomizer import SmartRandomizer
+from Logger import Logger
 
 
 class ConeTypeRandomizer():
@@ -85,6 +86,8 @@ class Perception:
 
         if debug:
             box_map = PerceptionGroundTruthRandomizer.get_random()
-            return Perception(cone_map, box_map)
+            perception = Perception(cone_map, box_map)
         else:
-            return Perception(cone_map)
+            perception = Perception(cone_map)
+        
+        Logger.log(perception)
