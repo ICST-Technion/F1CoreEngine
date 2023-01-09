@@ -1,4 +1,4 @@
-from LoggerSim import Logger
+from Logger import Logger
 
 
 import random
