@@ -19,12 +19,12 @@ class DriveInstructionsRandomizer:
         return drive_instructions
 
 
-class ControlRandomizer:
+class Control:
     def __init__(self, drive_instructions):
         self.drive_instructions = drive_instructions
 
     @staticmethod
     def send_message():
         drive_instructions = DriveInstructionsRandomizer.get_random()
-        control = ControlRandomizer(drive_instructions)
+        control = Control(drive_instructions)
         Logger.log(control)
