@@ -1,4 +1,6 @@
-from Logger import Logger
+from Control import ControlRandomizer as Control
+from StateEstimation import StateEstimationRandomizer as StateEstimation
+from Perception import PerceptionRandomizer as Perception
 
 
 import random
@@ -6,12 +8,14 @@ import random
 
 
 def main():
-    perception = Logger.get_random_perception()
-    perception1 = Logger.get_random_perception()
-    state_estimation = Logger.get_random_state_estimation()
-    state_estimation2 = Logger.get_random_state_estimation()
-    control = Logger.get_random_contol()
-    control2 = Logger.get_random_contol()
+    Perception.send_message()
+    Perception.send_message()
+    
+    StateEstimation.send_message()
+    StateEstimation.send_message()
+    
+    Control.send_message()
+    Control.send_message()
     return
 
 
