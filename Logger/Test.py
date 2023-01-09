@@ -1,6 +1,6 @@
-from Control import ControlRandomizer as Control
-from StateEstimation import StateEstimationRandomizer as StateEstimation
-from Perception import PerceptionRandomizer as Perception
+from Control import Control
+from StateEstimation import StateEstimation
+from Perception import Perception
 
 
 import random
