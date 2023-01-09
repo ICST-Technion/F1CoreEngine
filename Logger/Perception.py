@@ -86,8 +86,6 @@ class Perception:
 
         if debug:
             box_map = PerceptionGroundTruthRandomizer.get_random()
-            perception = Perception(cone_map, box_map)
+            Logger.log(Perception(cone_map, box_map))
         else:
-            perception = Perception(cone_map)
-        
-        Logger.log(perception)
+            Logger.log(Perception(cone_map))
