@@ -1,5 +1,5 @@
-def to_gRPC(state):
-    return state
+def to_gRPC(message):  # TODO: implement
+    pass
 
 
 class Logger:
