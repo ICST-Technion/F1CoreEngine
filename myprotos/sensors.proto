@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package formulaserver;
+
+
+message Vector2D {
+    double x = 1;
+    double y = 2;
+}
+
+message CarState {
+    Vector2D position = 1;  /// Relative to GPS position. x=North, y=East, in [meters].             
+    Vector2D position_deviation = 2;
+    
+    Vector2D velocity = 3;  /// x=North, y=East, in [m/sec].                            
+    Vector2D velocity_deviation = 4;
+    
+    double theta = 5;   /// Orientation of ego from x axis to y axis [rad]  
+    double theta_deviation = 6;  
+    
+    double theta_dot = 7; /// [rad/sec]
+    double theta_dot_deviation = 8;  
+        
+    double steering_angle = 9;  /// [rad]
+    double steering_angle_deviation = 10;
+        
+    double acceleration = 11; /// [(m/sec)^2]
+    double acceleration_deviation = 12;
+}
