@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package formulaserver;
+
+import "sensors.proto";
+
+service MessagePassing {
+
+  // SimulationStart
+  //
+  // Unary RPC, the server gets a simulation request with an ID from the client.
+  // The server starts the simulation, and sends a flag to the client notifing whether the simulation started
+  // succesfully or not.
+  rpc SimulationStart(SimulationStartRequest) returns (MessageAck) {}
+
+  // SimulationEnd
+  //
+  // Unary RPC, the server gets a simulation end notifiaction with an ID from the client.
+  // The server ends the simulation, and sends a flag to the client notifing whether the simulation ended
+  // succesfully or not.
+  rpc SimulationEnd(SimulationStartRequest) returns (MessageAck) {}
+
+  rpc GetCarState(CarState) returns (MessageAck) {}
+
+}
+
+// SimulationStartRequest
+//
+// Sent from the client when they want to start a simulation
+message SimulationStartRequest {
+  // ID of the simulation
+  int32 simulationid = 1;
+}
+
+
+// NotifySimulationEnd
+//
+// Sent from the client when they want to notify the server
+// that the simulation ended
+message NotifySimulationEnd {
+  // ID of the simulation
+  int32 simulationid = 1;
+}
+
+message MessageAck {
+  string ackmessage = 1;
+}
