@@ -81,7 +81,7 @@ class Perception:
         self.box_map = box_map  # this member might be inaccurate
 
     @staticmethod
-    def get_random(debug=False):
+    def send_message(debug=False):
         cone_map = ConeMapRandomizer.get_random()
 
         if debug:
@@ -89,3 +89,5 @@ class Perception:
             Logger.log(Perception(cone_map, box_map))
         else:
             Logger.log(Perception(cone_map))
+
+

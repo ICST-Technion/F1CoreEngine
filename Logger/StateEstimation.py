@@ -99,6 +99,6 @@ class StateEstimation:
         self.formula_state = formula_state
 
     @staticmethod
-    def get_random():
+    def send_message():
         formula_state = FormulaStateRandomizer.get_random()
         Logger.log(StateEstimation(formula_state))
