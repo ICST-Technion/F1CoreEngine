@@ -3,6 +3,7 @@ import random
 import control_pb2 as control
 from SmartRandomizer import SmartRandomizer
 from Logger import Logger
+import Common as common
 
 class DriveInstructionsRandomizer:
     proximityRandomizer = SmartRandomizer([(random.uniform, 0, 1), (random.uniform, 0, 1), (random.uniform, -1, 1),
@@ -20,10 +21,9 @@ class DriveInstructionsRandomizer:
 
 
 class Control:
-    def __init__(self, drive_instructions):
-        self.drive_instructions = drive_instructions
 
     @staticmethod
     def send_message():
         drive_instructions = DriveInstructionsRandomizer.get_random()
-        Logger.log(Control(drive_instructions))
+        Logger.log(common.MessageWrapper(drive_instructions, common.Module.CONTROL_MODULE))
+

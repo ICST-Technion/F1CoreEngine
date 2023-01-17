@@ -95,10 +95,8 @@ class FormulaStateRandomizer:
 
 
 class StateEstimation:
-    def __init__(self, formula_state):
-        self.formula_state = formula_state
 
     @staticmethod
     def send_message():
         formula_state = FormulaStateRandomizer.get_random()
-        Logger.log(StateEstimation(formula_state))
+        Logger.log(common.MessageWrapper(formula_state, common.Module.STATE_EST_MODULE))

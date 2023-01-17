@@ -1,15 +1,17 @@
+import time
+
 import grpc
+
 import fservice_pb2_grpc
 import fservice_pb2 as messages
-from Perception import Perception
-from StateEstimation import StateEstimation
-from Control import Control
+
 
 class Logger:
 
     channel = grpc.insecure_channel('localhost:50051')
     stub = fservice_pb2_grpc.MessagePassingStub(channel)
     messages = []
+    timer = -1
 
     @classmethod
     def newExperiment(cls, simid):
@@ -17,6 +19,7 @@ class Logger:
         startMsg.simulationid = simid
         ack = cls.stub.SimulationStart(startMsg)
         cls.messages.append(ack.ackmessage)
+        cls.timer = time.time()
 
     @classmethod
     def endExperiment(cls, simid):
@@ -24,21 +27,13 @@ class Logger:
         endMsg.simulationid = simid
         ack = cls.stub.SimulationStart(endMsg)
         cls.messages.append(ack.ackmessage)
+        cls.timer = -1
 
     @classmethod
     def log(cls, message):
-        # right now this is NOT CORRECT. the message can be one of 4 types, which are:
-        # 1: DriveInstructions - from control
-        # 2: FormulaState - from state estimation
-        # 3: ConeMap - from perception
-        # 4: PerceptionGroundTruth - from perception
+        ack = cls.stub.GetMessage(message)
+        cls.messages.append(ack.ackmessage)
 
-        if isinstance(message, Perception):
-            pass
-        elif isinstance(message, StateEstimation):
-            pass
-        else:
-            pass
 
 
 

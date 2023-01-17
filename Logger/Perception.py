@@ -76,9 +76,6 @@ class PerceptionGroundTruthRandomizer:
 
 
 class Perception:
-    def __init__(self, cone_map, box_map=None):
-        self.cone_map = cone_map
-        self.box_map = box_map  # this member might be inaccurate
 
     @staticmethod
     def send_message(debug=False):
@@ -86,8 +83,9 @@ class Perception:
 
         if debug:
             box_map = PerceptionGroundTruthRandomizer.get_random()
-            Logger.log(Perception(cone_map, box_map))
+            Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones"))
+            Logger.log(common.MessageWrapper(box_map, common.Module.PERCEPTION_MODULE, "boxes"))
         else:
-            Logger.log(Perception(cone_map))
+            Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones"))
 
 

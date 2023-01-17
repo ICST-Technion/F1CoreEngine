@@ -11,22 +11,22 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-import sensors_pb2 as sensors__pb2
+import f1messages_pb2 as f1messages__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x66service.proto\x12\rformulaserver\x1a\rsensors.proto\".\n\x16SimulationStartRequest\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\"+\n\x13NotifySimulationEnd\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\" \n\nMessageAck\x12\x12\n\nackmessage\x18\x01 \x01(\t2\x81\x02\n\x0eMessagePassing\x12U\n\x0fSimulationStart\x12%.formulaserver.SimulationStartRequest\x1a\x19.formulaserver.MessageAck\"\x00\x12S\n\rSimulationEnd\x12%.formulaserver.SimulationStartRequest\x1a\x19.formulaserver.MessageAck\"\x00\x12\x43\n\x0bGetCarState\x12\x17.formulaserver.CarState\x1a\x19.formulaserver.MessageAck\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x66service.proto\x12\rformulaserver\x1a\x10\x66\x31messages.proto\".\n\x16SimulationStartRequest\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\"+\n\x13NotifySimulationEnd\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\" \n\nMessageAck\x12\x12\n\nackmessage\x18\x01 \x01(\t2\xa2\x03\n\x0eMessagePassing\x12U\n\x0fSimulationStart\x12%.formulaserver.SimulationStartRequest\x1a\x19.formulaserver.MessageAck\"\x00\x12P\n\rSimulationEnd\x12\".formulaserver.NotifySimulationEnd\x1a\x19.formulaserver.MessageAck\"\x00\x12\x43\n\x0bGetCarState\x12\x17.formulaserver.CarState\x1a\x19.formulaserver.MessageAck\"\x00\x12_\n\x19GetTimedDriveInstructions\x12%.formulaserver.TimedDriveInstructions\x1a\x19.formulaserver.MessageAck\"\x00\x12\x41\n\nGetMessage\x12\x16.formulaserver.Message\x1a\x19.formulaserver.MessageAck\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'fservice_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _SIMULATIONSTARTREQUEST._serialized_start=48
-  _SIMULATIONSTARTREQUEST._serialized_end=94
-  _NOTIFYSIMULATIONEND._serialized_start=96
-  _NOTIFYSIMULATIONEND._serialized_end=139
-  _MESSAGEACK._serialized_start=141
-  _MESSAGEACK._serialized_end=173
-  _MESSAGEPASSING._serialized_start=176
-  _MESSAGEPASSING._serialized_end=433
+  _SIMULATIONSTARTREQUEST._serialized_start=51
+  _SIMULATIONSTARTREQUEST._serialized_end=97
+  _NOTIFYSIMULATIONEND._serialized_start=99
+  _NOTIFYSIMULATIONEND._serialized_end=142
+  _MESSAGEACK._serialized_start=144
+  _MESSAGEACK._serialized_end=176
+  _MESSAGEPASSING._serialized_start=179
+  _MESSAGEPASSING._serialized_end=597
 # @@protoc_insertion_point(module_scope)
