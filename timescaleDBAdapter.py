@@ -78,9 +78,9 @@ class timescaleDBAdapter(Adapter):
         :return:
         """
         insert_into_drive_instructions_query = """
-        INSERT INTO drive_instructions VALUES ({exp_num}, {gas}, {brakes}, {steering}, {optimal_speed}, {time_stamp})
+        INSERT INTO drive_instructions VALUES ('{exp_id}', {gas}, {brakes}, {steering}, {optimal_speed}, {time_stamp})
         """.format(
-            exp_num=params["exp_num"],
+            exp_id=params["exp_id"],
             gas=params["gas"],
             brakes=params["brakes"],
             steering=params["steering"],
