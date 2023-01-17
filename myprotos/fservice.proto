@@ -20,9 +20,12 @@ service MessagePassing {
   // succesfully or not.
   rpc SimulationEnd(NotifySimulationEnd) returns (MessageAck) {}
 
+
   rpc GetCarState(CarState) returns (MessageAck) {}
 
   rpc GetTimedDriveInstructions(TimedDriveInstructions) returns (MessageAck) {}
+
+  rpc GetMessage(Message) returns (MessageAck) {}
 
 }
 

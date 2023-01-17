@@ -53,6 +53,9 @@ class MessagePassingServicer(fservice_pb2_grpc.MessagePassingServicer):
         self.dbadapter.insert_into_drive_instructions(dict)
         return MessageAck("Got TimedDriveInstructions")
 
+    def GetMessage(self, request, context):
+        return MessageAck("Got Message")
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor())

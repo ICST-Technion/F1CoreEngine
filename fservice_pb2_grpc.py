@@ -35,6 +35,11 @@ class MessagePassingStub(object):
                 request_serializer=f1messages__pb2.TimedDriveInstructions.SerializeToString,
                 response_deserializer=fservice__pb2.MessageAck.FromString,
                 )
+        self.GetMessage = channel.unary_unary(
+                '/formulaserver.MessagePassing/GetMessage',
+                request_serializer=f1messages__pb2.Message.SerializeToString,
+                response_deserializer=fservice__pb2.MessageAck.FromString,
+                )
 
 
 class MessagePassingServicer(object):
@@ -74,6 +79,12 @@ class MessagePassingServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_MessagePassingServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -95,6 +106,11 @@ def add_MessagePassingServicer_to_server(servicer, server):
             'GetTimedDriveInstructions': grpc.unary_unary_rpc_method_handler(
                     servicer.GetTimedDriveInstructions,
                     request_deserializer=f1messages__pb2.TimedDriveInstructions.FromString,
+                    response_serializer=fservice__pb2.MessageAck.SerializeToString,
+            ),
+            'GetMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetMessage,
+                    request_deserializer=f1messages__pb2.Message.FromString,
                     response_serializer=fservice__pb2.MessageAck.SerializeToString,
             ),
     }
@@ -171,6 +187,23 @@ class MessagePassing(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/formulaserver.MessagePassing/GetTimedDriveInstructions',
             f1messages__pb2.TimedDriveInstructions.SerializeToString,
+            fservice__pb2.MessageAck.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetMessage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/formulaserver.MessagePassing/GetMessage',
+            f1messages__pb2.Message.SerializeToString,
             fservice__pb2.MessageAck.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
