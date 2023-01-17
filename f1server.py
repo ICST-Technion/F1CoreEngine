@@ -1,10 +1,7 @@
 from concurrent import futures
-import logging
-import math
-import time
 
 import grpc
-import fservice_pb2
+
 import fservice_pb2_grpc
 from timescaleDBAdapter import timescaleDBAdapter
 
@@ -44,10 +41,22 @@ class MessagePassingServicer(fservice_pb2_grpc.MessagePassingServicer):
         self.dbadapter.insert_into_car_state(dict)
         return MessageAck("Got CarState")
 
+    def GetTimedDriveInstructions(self, request, context):
+        dict = {
+            "exp_num": self.currentSimulation,
+            "gas": request.gas,
+            "brakes": request.brakes,
+            "steering": request.steering,
+            "optimal_speed": request.optimal_speed,
+            "time_stamp": request.time_stamp
+        }
+        self.dbadapter.insert_into_drive_instructions(dict)
+        return MessageAck("Got TimedDriveInstructions")
+
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    route_guide_pb2_grpc.add_MessagePassingServicer_to_server(
+    server = grpc.server(futures.ThreadPoolExecutor())
+    fservice_pb2_grpc.add_MessagePassingServicer_to_server(
         MessagePassingServicer(), server)
     server.add_insecure_port('[::]:50051')
     server.start()

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package formulaserver;
 
-import "sensors.proto";
+import "f1messages.proto";
 
 service MessagePassing {
 
@@ -18,9 +18,11 @@ service MessagePassing {
   // Unary RPC, the server gets a simulation end notifiaction with an ID from the client.
   // The server ends the simulation, and sends a flag to the client notifing whether the simulation ended
   // succesfully or not.
-  rpc SimulationEnd(SimulationStartRequest) returns (MessageAck) {}
+  rpc SimulationEnd(NotifySimulationEnd) returns (MessageAck) {}
 
   rpc GetCarState(CarState) returns (MessageAck) {}
+
+  rpc GetTimedDriveInstructions(TimedDriveInstructions) returns (MessageAck) {}
 
 }
 
@@ -31,7 +33,6 @@ message SimulationStartRequest {
   // ID of the simulation
   int32 simulationid = 1;
 }
-
 
 // NotifySimulationEnd
 //
