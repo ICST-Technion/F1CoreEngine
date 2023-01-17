@@ -6,6 +6,10 @@ class DBAdapter(ABC):
     def insert_into_car_state(self, params):
         pass
 
+    @abstractmethod
+    def insert_into_drive_instructions(self, params):
+        pass
+
 
 """
 class DBAdapter:

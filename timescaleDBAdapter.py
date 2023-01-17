@@ -5,7 +5,8 @@ from overrides import override
 class timescaleDBAdapter(Adapter):
     def __init__(self):
         # super.__init__()
-        self.connection_string = "postgres://postgres:password@localhost:5432/formulaDB"
+        # self.connection_string = "postgres://postgres:password@localhost:5432/formulaDB"
+        self.connection_string = "postgres://postgres:password@localhost:5432/postgres"
         self.conn = psycopg2.connect(self.connection_string)
         self.cursor = self.conn.cursor()
         self.car_state_num = 0
@@ -26,13 +27,14 @@ class timescaleDBAdapter(Adapter):
             steering angle,
             steering angle deviation,
             acceleration,
-            acceleration deviation
+            acceleration deviation,
+            time_stamp
         :return:
         """
         insert_into_car_state_query = """
         INSERT INTO car_state VALUES ({state_num}, {position_x}, {position_y}, {position_deviation_x}, {position_deviation_y},
         {velocity_x}, {velocity_y}, {velocity_deviation_x}, {velocity_deviation_y}, {theta}, {theta_deviation}, {theta_dot}, 
-        {theta_dot_deviation}, {steering_angle}, {steering_angle_deviation}, {acceleration}, {acceleration_deviation})
+        {theta_dot_deviation}, {steering_angle}, {steering_angle_deviation}, {acceleration}, {acceleration_deviation}, {time_stamp})
         """.format(
             state_num=self.car_state_num,
             position_x=params["position_vector"][0],
@@ -50,12 +52,44 @@ class timescaleDBAdapter(Adapter):
             steering_angle=params["steering_angle"],
             steering_angle_deviation=params["steering_angle_deviation"],
             acceleration=params["acceleration"],
-            acceleration_deviation=params["acceleration_deviation"]
+            acceleration_deviation=params["acceleration_deviation"],
+            time_stamp=params["time_stamp"]
         )
 
         try:
             self.cursor.execute(insert_into_car_state_query)
             self.car_state_num += 1
+        except (Exception, psycopg2) as e:
+            print(e)
+
+        self.conn.commit()  # TODO: Do we need it now?
+
+    @override(Adapter)
+    def insert_into_drive_instructions(self, params):
+        """
+        function inserts values into drive_instructions table
+        :param params: a dictionary of values. Should contain:
+        exp_num,
+        gas,
+        brakes,
+        steering,
+        optimal_speed,
+        time_stamp
+        :return:
+        """
+        insert_into_drive_instructions_query = """
+        INSERT INTO drive_instructions VALUES ({exp_num}, {gas}, {brakes}, {steering}, {optimal_speed}, {time_stamp})
+        """.format(
+            exp_num=params["exp_num"],
+            gas=params["gas"],
+            brakes=params["brakes"],
+            steering=params["steering"],
+            optimal_speed=params["optimal_speed"],
+            time_stamp=params["time_stamp"]
+        )
+
+        try:
+            self.cursor.execute(insert_into_drive_instructions_query)
         except (Exception, psycopg2) as e:
             print(e)
 
