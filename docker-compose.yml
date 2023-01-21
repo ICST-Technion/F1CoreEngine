@@ -1,5 +1,11 @@
 services:
   grafana:
-    build: client
+    build: client/grafana
     ports:
       - "3000:3000"
+  timescaledb:
+    build: server/db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
