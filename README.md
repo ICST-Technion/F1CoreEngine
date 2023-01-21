@@ -15,6 +15,7 @@ that have cloned this project. In the section we assume the following has alread
 6. Navigate to your local clone of this repository, then go to the 'Dashboards' folder and select one of the dashboard '.json' files.
 7. This process should be repeated for all dashboard files in that folder.
 8. You should now have all of the required dashboards available in your server.
+
 In order to backup your database, you can use this command:
 1. pg_dump -Fc -f filename.bak database_name
 
