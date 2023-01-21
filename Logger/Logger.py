@@ -31,7 +31,7 @@ class Logger:
 
     @classmethod
     def log(cls, message):
-        ack = cls.stub.GetMessage(message)
+        ack = cls.stub.GetMessage(message.message)
         cls.messages.append(ack.ackmessage)
 
 
