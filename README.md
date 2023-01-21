@@ -16,11 +16,15 @@ that have cloned this project. In the section we assume the following has alread
 7. This process should be repeated for all dashboard files in that folder.
 8. You should now have all of the required dashboards available in your server.
 
+# Backing up your Database to .bak file
+
 In order to backup your database, you can use this command:
 1. pg_dump -Fc -f filename.bak database_name
 
 To backup a database named tsdb hosted on a remote server use:
 1. pg_dump -h <REMOTE_HOST> -p 55555 -U tsdbadmin -Fc -f tsdb.bak tsdb
+
+# Loading Data from .bak file
 
 Assuming you have a .bak backup file, this are the steps to do in order to load and use the data in the file:
 * In psql, create a new database to restore to, and connect to it:
