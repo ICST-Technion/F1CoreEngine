@@ -1,5 +1,1 @@
 FROM grafana/grafana:9.3.0
-USER root
-RUN apk --no-cache add curl
-USER 472
-ENTRYPOINT ["/run.sh"]
