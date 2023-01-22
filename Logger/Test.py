@@ -13,12 +13,12 @@ def main():
     id = randint(0, 10000)
     Logger.newExperiment(id)
     print(f"createing experiment {id=}")
-    while(True):
-        Control.send_message()
-        sleep(2)
+    # while(True):
+    #     Control.send_message()
+    #     sleep(2)
 
-    # for _ in range(3):
-        # StateEstimation.send_message()
+    for _ in range(3):
+        StateEstimation.send_message()
         
     # for _ in range(3):
         # Perception.send_message()

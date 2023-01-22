@@ -10,7 +10,7 @@ from control_pb2 import DriveInstructions
 from common_pb2 import Module
 from fservice_pb2 import MessageAck
 from perception_pb2 import PerceptionGroundTruth, ConeMap
-from state_est_pb2 import CarState
+from state_est_pb2 import CarState, FormulaState
 
 
 class MessagePassingServicer(fservice_pb2_grpc.MessagePassingServicer):
@@ -81,21 +81,21 @@ class MessagePassingServicer(fservice_pb2_grpc.MessagePassingServicer):
 
         elif request.header.source == Module.STATE_EST_MODULE:
             # The message is FormulaState
-            my_message = CarState()
+            my_message = FormulaState()
             any_message.Unpack(my_message)
             dict = {
-                "position vector": (my_message.position.x, my_message.position.y),
-                "position deviation vector": (my_message.position_deviation.x, my_message.position_deviation.y),
-                "velocity vector": (my_message.velocity.x, my_message.velocity.y),
-                "velocity deviation vector": (my_message.velocity_deviation.x, my_message.velocity_deviation.y),
-                "theta": my_message.theta,
-                "theta deviation": my_message.theta_deviation,
-                "theta dot": my_message.theta_dot,
-                "theta dot deviation": my_message.theta_dot_deviation,
-                "steering angle": my_message.steering_angle,
-                "steering angle deviation": my_message.steering_angle_deviation,
-                "acceleration": my_message.acceleration,
-                "acceleration deviation": my_message.acceleration_deviation,
+                "position_vector": (my_message.current_state.position.x, my_message.current_state.position.y),
+                "position_deviation_vector": (my_message.current_state.position_deviation.x, my_message.current_state.position_deviation.y),
+                "velocity_vector": (my_message.current_state.velocity.x, my_message.current_state.velocity.y),
+                "velocity_deviation_vector": (my_message.current_state.velocity_deviation.x, my_message.current_state.velocity_deviation.y),
+                "theta": my_message.current_state.theta,
+                "theta_deviation": my_message.current_state.theta_deviation,
+                "theta_dot": my_message.current_state.theta_dot,
+                "theta_dot_deviation": my_message.current_state.theta_dot_deviation,
+                "steering_angle": my_message.current_state.steering_angle,
+                "steering_angle_deviation": my_message.current_state.steering_angle_deviation,
+                "acceleration": my_message.current_state.acceleration,
+                "acceleration_deviation": my_message.current_state.acceleration_deviation,
                 "time_stamp": datetime.datetime.fromtimestamp(
                     (timestamp := request.header.timestamp).seconds + timestamp.nanos / 1e9, tz=datetime.timezone.utc)
             }
