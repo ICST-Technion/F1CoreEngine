@@ -83,8 +83,8 @@ class Perception:
 
         if debug:
             box_map = PerceptionGroundTruthRandomizer.get_random()
-            Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones"))
-            Logger.log(common.MessageWrapper(box_map, common.Module.PERCEPTION_MODULE, "boxes"))
+            Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones").message)
+            Logger.log(common.MessageWrapper(box_map, common.Module.PERCEPTION_MODULE, "boxes").message)
         else:
             Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones").message)
 
