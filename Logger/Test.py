@@ -1,12 +1,6 @@
 from Control import Control
-import common_pb2 as common
-import control_pb2 as control
 from StateEstimation import StateEstimation
 from Perception import Perception
-
-
-import random
-
 
 def main():
     for _ in range(3):
