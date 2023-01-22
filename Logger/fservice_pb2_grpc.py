@@ -2,8 +2,9 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import f1messages_pb2 as f1messages__pb2
+import common_pb2 as common__pb2
 import fservice_pb2 as fservice__pb2
+import state_est_pb2 as state__est__pb2
 
 
 class MessagePassingStub(object):
@@ -16,28 +17,28 @@ class MessagePassingStub(object):
             channel: A grpc.Channel.
         """
         self.SimulationStart = channel.unary_unary(
-                '/formulaserver.MessagePassing/SimulationStart',
+                '/TechnionFormulaAV.Messages.MessagePassing/SimulationStart',
                 request_serializer=fservice__pb2.SimulationStartRequest.SerializeToString,
                 response_deserializer=fservice__pb2.MessageAck.FromString,
                 )
         self.SimulationEnd = channel.unary_unary(
-                '/formulaserver.MessagePassing/SimulationEnd',
+                '/TechnionFormulaAV.Messages.MessagePassing/SimulationEnd',
                 request_serializer=fservice__pb2.NotifySimulationEnd.SerializeToString,
                 response_deserializer=fservice__pb2.MessageAck.FromString,
                 )
         self.GetCarState = channel.unary_unary(
-                '/formulaserver.MessagePassing/GetCarState',
-                request_serializer=f1messages__pb2.CarState.SerializeToString,
+                '/TechnionFormulaAV.Messages.MessagePassing/GetCarState',
+                request_serializer=state__est__pb2.CarState.SerializeToString,
                 response_deserializer=fservice__pb2.MessageAck.FromString,
                 )
         self.GetTimedDriveInstructions = channel.unary_unary(
-                '/formulaserver.MessagePassing/GetTimedDriveInstructions',
-                request_serializer=f1messages__pb2.TimedDriveInstructions.SerializeToString,
+                '/TechnionFormulaAV.Messages.MessagePassing/GetTimedDriveInstructions',
+                request_serializer=fservice__pb2.TimedDriveInstructions.SerializeToString,
                 response_deserializer=fservice__pb2.MessageAck.FromString,
                 )
         self.GetMessage = channel.unary_unary(
-                '/formulaserver.MessagePassing/GetMessage',
-                request_serializer=f1messages__pb2.Message.SerializeToString,
+                '/TechnionFormulaAV.Messages.MessagePassing/GetMessage',
+                request_serializer=common__pb2.Message.SerializeToString,
                 response_deserializer=fservice__pb2.MessageAck.FromString,
                 )
 
@@ -100,22 +101,22 @@ def add_MessagePassingServicer_to_server(servicer, server):
             ),
             'GetCarState': grpc.unary_unary_rpc_method_handler(
                     servicer.GetCarState,
-                    request_deserializer=f1messages__pb2.CarState.FromString,
+                    request_deserializer=state__est__pb2.CarState.FromString,
                     response_serializer=fservice__pb2.MessageAck.SerializeToString,
             ),
             'GetTimedDriveInstructions': grpc.unary_unary_rpc_method_handler(
                     servicer.GetTimedDriveInstructions,
-                    request_deserializer=f1messages__pb2.TimedDriveInstructions.FromString,
+                    request_deserializer=fservice__pb2.TimedDriveInstructions.FromString,
                     response_serializer=fservice__pb2.MessageAck.SerializeToString,
             ),
             'GetMessage': grpc.unary_unary_rpc_method_handler(
                     servicer.GetMessage,
-                    request_deserializer=f1messages__pb2.Message.FromString,
+                    request_deserializer=common__pb2.Message.FromString,
                     response_serializer=fservice__pb2.MessageAck.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'formulaserver.MessagePassing', rpc_method_handlers)
+            'TechnionFormulaAV.Messages.MessagePassing', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -134,7 +135,7 @@ class MessagePassing(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/formulaserver.MessagePassing/SimulationStart',
+        return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/SimulationStart',
             fservice__pb2.SimulationStartRequest.SerializeToString,
             fservice__pb2.MessageAck.FromString,
             options, channel_credentials,
@@ -151,7 +152,7 @@ class MessagePassing(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/formulaserver.MessagePassing/SimulationEnd',
+        return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/SimulationEnd',
             fservice__pb2.NotifySimulationEnd.SerializeToString,
             fservice__pb2.MessageAck.FromString,
             options, channel_credentials,
@@ -168,8 +169,8 @@ class MessagePassing(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/formulaserver.MessagePassing/GetCarState',
-            f1messages__pb2.CarState.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/GetCarState',
+            state__est__pb2.CarState.SerializeToString,
             fservice__pb2.MessageAck.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -185,8 +186,8 @@ class MessagePassing(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/formulaserver.MessagePassing/GetTimedDriveInstructions',
-            f1messages__pb2.TimedDriveInstructions.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/GetTimedDriveInstructions',
+            fservice__pb2.TimedDriveInstructions.SerializeToString,
             fservice__pb2.MessageAck.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -202,8 +203,8 @@ class MessagePassing(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/formulaserver.MessagePassing/GetMessage',
-            f1messages__pb2.Message.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/GetMessage',
+            common__pb2.Message.SerializeToString,
             fservice__pb2.MessageAck.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
