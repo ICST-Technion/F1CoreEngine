@@ -21,7 +21,7 @@ def main():
         Perception.send_message()
     
     for _ in range(3):
-        Perception.send_message(True)
+        Perception.send_message(debug=True)
     Logger.endExperiment()
 
     return
