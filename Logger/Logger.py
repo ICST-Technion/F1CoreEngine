@@ -32,7 +32,7 @@ class Logger:
         if cls.simid is not None:
             raise Exception("newExperiment called before current experiment had ended.")
 
-        cls.simd = simid
+        cls.simid = simid
         startMsg = messages.SimulationStartRequest()
         startMsg.simulationid = simid
         if cls.stub is None:
