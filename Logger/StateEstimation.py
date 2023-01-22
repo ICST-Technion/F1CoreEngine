@@ -99,4 +99,4 @@ class StateEstimation:
     @staticmethod
     def send_message():
         formula_state = FormulaStateRandomizer.get_random()
-        Logger.log(common.MessageWrapper(formula_state, common.Module.STATE_EST_MODULE))
+        Logger.log(common.MessageWrapper(formula_state, common.Module.STATE_EST_MODULE).message)
