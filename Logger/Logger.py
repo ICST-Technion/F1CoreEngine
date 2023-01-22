@@ -7,10 +7,16 @@ import fservice_pb2 as messages
 
 class Logger:
 
-    channel = grpc.insecure_channel('localhost:50051')
-    stub = fservice_pb2_grpc.MessagePassingStub(channel)
     messages = []
-
+    channel = None
+    stub = None
+    
+    @classmethod
+    def connect(cls):
+        cls.channel = grpc.insecure_channel('localhost:50051')
+        cls.stub = fservice_pb2_grpc.MessagePassingStub(channel)
+    
+    
     @classmethod
     def newExperiment(cls, simid):
         startMsg = messages.SimulationStartRequest()
