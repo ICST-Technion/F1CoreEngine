@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+import "common.proto";
+import "control.proto";
+import "state_est.proto";
+import "perception.proto";
+import "ground_truth.proto";
+
+message ControlDashbaord
+{
+    DriveInstructions instructions = 1;
+	Vector2D current_position = 2;		
+    float current_steering_angle = 3;
+    float current_speed = 4;
+    repeated float optimal_route = 5;
+    repeated float right_bound = 6;
+    repeated float left_bound = 7;
+    repeated StateCone right_bound_cones = 8;
+    repeated StateCone left_bound_cones = 9;
+}
+
+message FormulaStateDash
+{	
+	FormulaState formula_state_message = 1;
+	repeated StateCone cone_samples = 2;  
+	repeated StateCone cone_clusters = 3;  
+	StateGroundTruth ground_truth = 4;
+}
+
+message PerceptionDash
+{
+    repeated BoundingBox bbs = 1;
+    ConeMap cone_map = 2;
+}

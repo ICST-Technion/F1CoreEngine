@@ -2,6 +2,7 @@ import psycopg2
 from DBAdapter import DBAdapter as Adapter
 from overrides import override
 
+
 class timescaleDBAdapter(Adapter):
     def __init__(self):
         # super.__init__()
@@ -11,7 +12,7 @@ class timescaleDBAdapter(Adapter):
         self.cursor = self.conn.cursor()
         self.car_state_num = 0
 
-    @override(Adapter)
+    @override
     def insert_into_car_state(self, params):
         """
         function inserts values into the car_state table
@@ -64,7 +65,7 @@ class timescaleDBAdapter(Adapter):
 
         self.conn.commit()  # TODO: Do we need it now?
 
-    @override(Adapter)
+    @override
     def insert_into_drive_instructions(self, params):
         """
         function inserts values into drive_instructions table

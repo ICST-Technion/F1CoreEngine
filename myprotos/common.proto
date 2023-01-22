@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+
+message Vector3D {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+message Vector2D {
+    double x = 1;
+    double y = 2;
+}
+
+enum Module {
+    UNKNOWN_MODULE = 0;
+    CONTROL_MODULE = 1;
+    STATE_EST_MODULE = 2;
+    PERCEPTION_MODULE = 3;
+    REAL_TIME_DATA_MODULE = 4;
+    SERVER = 5;
+}
+
+enum Mission {
+    MISSION_UNKNOWN = 0;
+    MISSION_MANUAL = 1;
+    MISSION_STRAIGHT_LINE = 2;
+    MISSION_EIGHT = 3;
+    MISSION_ENDURENCE = 4;
+}
+
+message TriggerMessage {
+    string type_url = 1;
+    uint32 id = 2;
+}
+
+message Header {
+    uint32 id = 1;
+    google.protobuf.Timestamp timestamp = 2;
+    google.protobuf.Timestamp steady_timestamp = 3;
+    Module source = 4;
+    repeated TriggerMessage triggers = 5;
+    int32 priority = 6;
+}
+
+message Message {
+    Header header = 1;
+    google.protobuf.Any data = 2;
+}

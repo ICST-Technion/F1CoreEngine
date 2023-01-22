@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+import "perception.proto";
+import "common.proto";
+
+// Deviations are deviation of the same type as the value. i.e. velocity_deviation is +-X [m/sec].
+message CarState {
+	Vector2D position = 1;	/// Relative to GPS position. x=North, y=East, in [meters].				
+	Vector2D position_deviation = 2;
+	
+	Vector2D velocity = 3;	/// x=North, y=East, in [m/sec].							
+	Vector2D velocity_deviation = 4;
+	
+    double theta = 5;	/// Orientation of ego from x axis to y axis [rad]	
+	double theta_deviation = 6;  
+	
+	double theta_dot = 7; /// [rad/sec]
+	double theta_dot_deviation = 8;  
+		
+	double steering_angle = 9;	/// [rad]
+	double steering_angle_deviation = 10;
+		
+	double acceleration = 11; /// [(m/sec)^2]
+	double acceleration_deviation = 12;
+}
+
+message ClusterInfo {
+	int32 age = 1;			/// How old is this cluster (Time since discovery)
+	int32 num_of_cones = 2; 	
+	double extra = 3;		/// What ever you want 
+}
+
+message StateCone {
+    uint32 cone_id = 1;
+    double r = 2;      		// Relative to the car [meters]
+    double alpha = 3;  		// Relative to the car [radians]
+    Vector2D position = 4;  // absolute in the coordinate system of xNorth yEast 
+    ConeType type = 5;
+	double position_deviation = 6;
+	ClusterInfo cluster_info = 7;
+}
+
+enum FormulaStateMessageType {
+	only_prediction = 0;			/// I have not yet corrected against sensors' data 
+	prediction_and_correction = 1;	/// I have corrected against sensors' data
+	still_calibrating = 2;			/// Should wait before relying on this data until the calibration phase has ended
+	finished_lap = 3;				/// Yay
+}
+
+message FormulaState
+{
+    repeated StateCone right_bound_cones = 1;
+    repeated StateCone left_bound_cones = 2;
+    CarState current_state = 3;
+    double distance_to_finish = 4;
+	FormulaStateMessageType message_type = 5;
+	
+	double distance_from_left = 6;		/// [meters]
+	double distance_from_right = 7;		/// [meters]
+	double road_angle = 8; // direction of road . absolute in the coordinate system of xNorth yEast 
+}

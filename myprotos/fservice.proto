@@ -1,8 +1,9 @@
 syntax = "proto3";
 
-package formulaserver;
+package TechnionFormulaAV.Messages;
 
-import "f1messages.proto";
+import "common.proto";
+import "state_est.proto";
 
 service MessagePassing {
 
@@ -48,4 +49,13 @@ message NotifySimulationEnd {
 
 message MessageAck {
   string ackmessage = 1;
+}
+
+message TimedDriveInstructions
+{
+    float gas = 1;              /// Goes from 0 to 1.0
+    float brakes = 2;           /// Goes from 0 to 1.0
+    float steering = 3;         /// Goes from -1.0 to 1.0
+    float optimal_speed = 4;    /// values are in [m/sec]. Range: should be 0 to 80[km/h] 
+    float time_stamp = 5;        //  values are in seconds
 }
