@@ -101,7 +101,7 @@ Assuming you have a .bak backup file, this are the steps to do in order to load 
 * Run timescaledb_pre_restore to put your database in the right state for restoring:
   1. SELECT timescaledb_pre_restore();
 * Restore the database:
-  1. \! pg_restore -Fc -d \<DB\> filename.bak
+  1. \\! pg_restore -Fc -d \<DB\> filename.bak
 * Run timescaledb_post_restore to return your database to normal operations:
   1. SELECT timescaledb_post_restore();
 * Optinal - Reindex your database to improve query performance:
