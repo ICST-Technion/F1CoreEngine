@@ -86,6 +86,6 @@ class Perception:
             Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones"))
             Logger.log(common.MessageWrapper(box_map, common.Module.PERCEPTION_MODULE, "boxes"))
         else:
-            Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones"))
+            Logger.log(common.MessageWrapper(cone_map, common.Module.PERCEPTION_MODULE, "cones").message)
 
 
