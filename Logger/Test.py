@@ -1,8 +1,11 @@
 from Control import Control
 from StateEstimation import StateEstimation
 from Perception import Perception
-
+from Logger import Logger
 def main():
+    
+    Logger.connect()
+    
     for _ in range(3):
         Control.send_message()
 
