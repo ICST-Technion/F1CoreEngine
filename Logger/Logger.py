@@ -11,7 +11,6 @@ class Logger:
     channel = grpc.insecure_channel('localhost:50051')
     stub = fservice_pb2_grpc.MessagePassingStub(channel)
     messages = []
-    timer = -1
 
     @classmethod
     def newExperiment(cls, simid):
@@ -19,7 +18,6 @@ class Logger:
         startMsg.simulationid = simid
         ack = cls.stub.SimulationStart(startMsg)
         cls.messages.append(ack.ackmessage)
-        cls.timer = time.time()
 
     @classmethod
     def endExperiment(cls, simid):
@@ -27,7 +25,6 @@ class Logger:
         endMsg.simulationid = simid
         ack = cls.stub.SimulationStart(endMsg)
         cls.messages.append(ack.ackmessage)
-        cls.timer = -1
 
     @classmethod
     def log(cls, message):
