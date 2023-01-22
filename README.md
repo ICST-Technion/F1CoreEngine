@@ -1,7 +1,74 @@
-# F1CoreEngine
+# About F1CoreEngine
 A Technion CS Software-Project "F1 Core Engine" for the Autonomous Formula-1 Technion Project
 
-# Initializing the Grafana Server
+## Data Pipeline Structure
+  The data pipline from the car to the gui has 5 main parts:
+  1. The Formula Automation Components
+  2. Logger
+  3. Backend Server
+  4. Database
+  5. Grafana
+
+## Formula Automation Components
+  The formula dispatch server is composed of 3 main components. Each one serves as a Data Source:
+    1. Perception: Recives input from different cameras and sensors, and outputs absolute positions
+      and information about the surroundings of the car.
+    2. State Estimation: Recives the output from the Preception Unit and creates a map
+      of the state of the car.
+    3. Control: Recives the output of the State Estimation Unit and dictates behaviour
+      of the car controls.
+
+  For the purposes of testing, the project also provides a random output generator
+  which is meant to simulate each of the components.
+
+## Logger
+  The Logger recives output from the Formula Automation Components and
+    sends them to the Backend Server.
+  The Logger is also incharge of managing the connections and metadata
+    about current experiments.
+  It is represented as a class, each Formula Automation Component
+    addresses the class and logs it's output using it.
+  
+## Backend Server
+  The Backend Server communicates via gRPC with the Logger,
+    it recives messages from it, proccesses them and inserts them into
+    the Database tables. It is also incharge of managing open experiment sessions with the Logger.
+
+## Database
+  This project uses TimeScaleDB which is an SQL-based database,
+  This is since the data proccessed in this domain hevaly relies
+    on timing and TimeScaleDB is uniquely optimized for handling this type of data.
+
+## Grafana
+  Grafana is a web-based interface for visualizing data.
+  It is comprized of a server, and the client (a web browser running client-side javascript).
+  The server has multiple dashboards, each funtions as it's own page 
+  and each dashboard can have have multiple panels to display data streamed from the connected data sources.
+  In this project, the grafana server is connected the TimeScaleDB database and displays
+  live data & analytics about the car's behaviour.
+
+# Cloning the Project
+## Local Dependencies
+  * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+  * [Docker](https://docs.docker.com/get-docker/) - For the purposes of reliability and repreducability,
+    the Backend Server, Database and Grafana Server are meant to be 
+    hosted on a docker - each of them as it's own docker image.
+    <!-- Python ? -->
+
+## Initial Setup
+* Clone this repository:
+> git clone https://github.com/ICST-Technion/F1CoreEngine.git
+
+## Backend Server Initialization
+
+## Database Initialization
+
+## Grafana Server Initializing
+### Uploading the Docker Image
+
+### Adding Datasources
+
+### Importing the existing Dashboards
 In this section we will go over how to reproduce the Grafana Server on new systems
 that have cloned this project. In the section we assume the following has already been done:
 * This project's repository has been cloned on the local machine. 
@@ -34,7 +101,7 @@ Assuming you have a .bak backup file, this are the steps to do in order to load 
 * Run timescaledb_pre_restore to put your database in the right state for restoring:
   1. SELECT timescaledb_pre_restore();
 * Restore the database:
-  1. \! pg_restore -Fc -d \<DB\> filename.bak
+  1. \\! pg_restore -Fc -d \<DB\> filename.bak
 * Run timescaledb_post_restore to return your database to normal operations:
   1. SELECT timescaledb_post_restore();
 * Optinal - Reindex your database to improve query performance:
