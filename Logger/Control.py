@@ -25,5 +25,5 @@ class Control:
     @staticmethod
     def send_message():
         drive_instructions = DriveInstructionsRandomizer.get_random()
-        Logger.log(common.MessageWrapper(drive_instructions, common.Module.CONTROL_MODULE))
+        Logger.log(common.MessageWrapper(drive_instructions, common.Module.CONTROL_MODULE).message)
 
