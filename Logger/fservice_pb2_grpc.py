@@ -4,7 +4,6 @@ import grpc
 
 import common_pb2 as common__pb2
 import fservice_pb2 as fservice__pb2
-import state_est_pb2 as state__est__pb2
 
 
 class MessagePassingStub(object):
@@ -24,16 +23,6 @@ class MessagePassingStub(object):
         self.SimulationEnd = channel.unary_unary(
                 '/TechnionFormulaAV.Messages.MessagePassing/SimulationEnd',
                 request_serializer=fservice__pb2.NotifySimulationEnd.SerializeToString,
-                response_deserializer=fservice__pb2.MessageAck.FromString,
-                )
-        self.GetCarState = channel.unary_unary(
-                '/TechnionFormulaAV.Messages.MessagePassing/GetCarState',
-                request_serializer=state__est__pb2.CarState.SerializeToString,
-                response_deserializer=fservice__pb2.MessageAck.FromString,
-                )
-        self.GetTimedDriveInstructions = channel.unary_unary(
-                '/TechnionFormulaAV.Messages.MessagePassing/GetTimedDriveInstructions',
-                request_serializer=fservice__pb2.TimedDriveInstructions.SerializeToString,
                 response_deserializer=fservice__pb2.MessageAck.FromString,
                 )
         self.GetMessage = channel.unary_unary(
@@ -68,18 +57,6 @@ class MessagePassingServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetCarState(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetTimedDriveInstructions(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def GetMessage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -97,16 +74,6 @@ def add_MessagePassingServicer_to_server(servicer, server):
             'SimulationEnd': grpc.unary_unary_rpc_method_handler(
                     servicer.SimulationEnd,
                     request_deserializer=fservice__pb2.NotifySimulationEnd.FromString,
-                    response_serializer=fservice__pb2.MessageAck.SerializeToString,
-            ),
-            'GetCarState': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetCarState,
-                    request_deserializer=state__est__pb2.CarState.FromString,
-                    response_serializer=fservice__pb2.MessageAck.SerializeToString,
-            ),
-            'GetTimedDriveInstructions': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetTimedDriveInstructions,
-                    request_deserializer=fservice__pb2.TimedDriveInstructions.FromString,
                     response_serializer=fservice__pb2.MessageAck.SerializeToString,
             ),
             'GetMessage': grpc.unary_unary_rpc_method_handler(
@@ -154,40 +121,6 @@ class MessagePassing(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/SimulationEnd',
             fservice__pb2.NotifySimulationEnd.SerializeToString,
-            fservice__pb2.MessageAck.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def GetCarState(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/GetCarState',
-            state__est__pb2.CarState.SerializeToString,
-            fservice__pb2.MessageAck.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def GetTimedDriveInstructions(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/TechnionFormulaAV.Messages.MessagePassing/GetTimedDriveInstructions',
-            fservice__pb2.TimedDriveInstructions.SerializeToString,
             fservice__pb2.MessageAck.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
