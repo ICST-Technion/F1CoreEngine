@@ -12,13 +12,15 @@ def main():
     for _ in range(3):
         Control.send_message()
 
-    # Perception.send_message()
-    # Perception.send_message()
+    for _ in range(3):
+        StateEstimation.send_message()
+        
+    for _ in range(3):
+        Perception.send_message()
     
-    # StateEstimation.send_message()
-    # StateEstimation.send_message()
-    
-
+    for _ in range(3):
+        Perception.send_message(True)
+        
     return
 
 
