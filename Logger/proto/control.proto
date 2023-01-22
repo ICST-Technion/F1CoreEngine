@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+message DriveInstructions
+{
+    float gas = 1;              /// Goes from 0 to 1.0
+    float brakes = 2;           /// Goes from 0 to 1.0
+    float steering = 3;         /// Goes from -1.0 to 1.0
+    float optimal_speed = 4;    /// values are in [m/sec]. Range: should be 0 to 80[km/h] 
+}
