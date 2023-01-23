@@ -65,14 +65,14 @@ A Technion CS Software-Project "F1 Core Engine" for the Autonomous Formula-1 Tec
 > python3 server/db/init_db.py -i
 5. Login to grafana in `localhost:3000` with the credentials `admin:admin` (and if you want you can change the password)
 6. Add a data source:
-   1. Go to the `settings/datasources` screen: # TODO: need to add image
+   1. Go to the `settings > datasources` screen: # TODO: need to add image
    2. Click `Add data source` button.
    3. Search `postgres` in the search bar:  # TODO: need to add image
    4. Fill the information as shown:
-      Host: `database:5432`, Database: `postgres`, User: `postgres`, Password: `password`
-   5. Disable SSL
-   6. Choose `PostgreSQL` version 15 and switch to `TimescaleDB`
-   7. Click `Save & Test`
+      1. Host: `database:5432`, Database: `postgres`, User: `postgres`, Password: `password`
+      2. Disable SSL
+      3. Choose `PostgreSQL` version 15 and switch to `TimescaleDB`
+      4. Click `Save & Test`
 7. [Import a Dashboard](#Importing-Existing-Dashboards) as per the following instructions.
 
 
@@ -91,26 +91,35 @@ that have cloned this project. In the section we assume the following has alread
 7. This process should be repeated for all dashboard files in that folder.
 8. You should now have all of the required dashboards available in your server.
 
+# Using the logger to send messages:
+The logger is a python class with the following class methods that should be used in the following order:
+* `Connect` - Initialize a connection with the System.
+* `NewExperiment` - Declares that the following messages will be send from a new experiment.
+* Use `Logger.log(<proto message containing the data of type Message>)`
+* `EndExperiment` - Declares that the experiment has ended.
+
 # Backing up your Database to .bak file
 
-In order to backup your database, you can use this command:
-1. pg_dump -Fc -f filename.bak postgres
+In order to backup the database from the docker container:
+1. `pg_dump -U postgres -Fc -f <file_name>.bak postgres`
 
-To backup a database hosted on a remote server use:
-1. pg_dump -h \<REMOTE_HOST\> -p 5432 -U \<USER\> -Fc -f filename.bak postgres
+To backup the database from the host machine:
+1. `pg_dump -h localhost -p 5432 -U postgres -Fc -f <file_name>.bak postgres`
 
 # Loading Data from .bak file
+* Before Loading the backup file, run the following command (this command will delete all the data on the database, so if you need it it's a good time to [backup](#Backing-up-your-Database-to-.bak-file):
+> python3 server/db/init_db.py -d
 
 Assuming you have a .bak backup file, this are the steps to do in order to load and use the data in the file:
-* In psql, create a new database to restore to, and connect to it:
-  1. CREATE DATABASE \<DB\>;
-  2. \c \<DB\>
-  3. CREATE EXTENSION IF NOT EXISTS timescaledb;
-* Run timescaledb_pre_restore to put your database in the right state for restoring:
-  1. SELECT timescaledb_pre_restore();
-* Restore the database:
-  1. \\! pg_restore -Fc -d \<DB\> filename.bak
-* Run timescaledb_post_restore to return your database to normal operations:
-  1. SELECT timescaledb_post_restore();
-* Optinal - Reindex your database to improve query performance:
-  1. REINDEX DATABASE \<DB\>;
+1. Connect to the database, `psql -h localhost -p 5432 -U postgres -d postgres`.
+2. Run timescaledb_pre_restore to put your database in the right state for restoring:
+  `SELECT timescaledb_pre_restore()`; 
+3. Restore the database:
+  `\! pg_restore -Fc -d postgres <path_to_file>.bak`
+4. Run timescaledb_post_restore to return your database to normal operations:
+  `SELECT timescaledb_post_restore();`
+5. Optinal - Reindex your database to improve query performance:
+  `REINDEX DATABASE \<DB\>;`
+
+# Clearing the database (without dropping the tables):
+> python3 server/db/init_db.py -c
