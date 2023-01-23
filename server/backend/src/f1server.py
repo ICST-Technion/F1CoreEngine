@@ -10,7 +10,7 @@ from control_pb2 import DriveInstructions
 from common_pb2 import Module
 from fservice_pb2 import MessageAck
 from perception_pb2 import PerceptionGroundTruth, ConeMap
-from state_est_pb2 import CarState, FormulaState
+from state_est_pb2 import FormulaState
 
 
 class MessagePassingServicer(fservice_pb2_grpc.MessagePassingServicer):

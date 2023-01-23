@@ -1,3 +1,5 @@
+import os
+
 import psycopg2
 from DBAdapter import DBAdapter as Adapter
 from overrides import override
@@ -7,7 +9,7 @@ class timescaleDBAdapter(Adapter):
     def __init__(self):
         # super.__init__()
         # self.connection_string = "postgres://postgres:password@localhost:5432/formulaDB"
-        self.connection_string = "postgres://postgres:password@localhost:5432/postgres"
+        self.connection_string = f"postgres://postgres:password@database:5432/postgres"
         self.conn = psycopg2.connect(self.connection_string)
         self.cursor = self.conn.cursor()
         self.car_state_num = 0

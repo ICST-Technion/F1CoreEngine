@@ -1,11 +1,17 @@
 services:
-  grafana:
+  frontend:
     build: client/
     ports:
       - "3000:3000"
-  timescaledb:
+  database:
     build: server/db
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=password
+  server:
+    build: server/backend
+    depends_on:
+      - database
+    ports:
+      - "50051:50051"
