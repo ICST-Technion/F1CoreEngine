@@ -1,26 +1,6 @@
-from contextlib import contextmanager
-from typing import List, Tuple, Union
-from psycopg2 import sql
-import DBConnector as Connector
 import psycopg2
 
 CONN_STR = "postgres://postgres:password@localhost:5432/postgres"
-
-@contextmanager
-def db_connection():
-    conn = None
-    try:
-        conn = Connector.DBConnector()
-        yield conn
-    finally:
-        conn and conn.close()
-    # try:
-    #     conn = psycopg2.connect(CONN_STR)
-    #     cursor = conn.cursor()
-    #     yield cursor
-    # finally:
-    #     cursor and cursor.close()
-
 
 def create_tables():
     create_tables_query = """
@@ -125,9 +105,6 @@ def create_tables():
     CREATE INDEX ix_drive_instructions_speed_over_time ON drive_instructions (optimal_speed, time_stamp);
     """
 
-    # with db_connection() as conn:
-    #     conn.execute(create_tables_query)
-
     try:
         conn = psycopg2.connect(CONN_STR)
         cursor = conn.cursor()
@@ -137,8 +114,6 @@ def create_tables():
     except (Exception) as e:
         print(e)
 
-    # with db_connection() as cursor:
-    #     cursor.execute(create_tables_query)
 
 
 def clear_tables():
@@ -152,16 +127,13 @@ def clear_tables():
     DELETE FROM drive_instructions;
     """
 
-    with db_connection() as conn:
-        conn.execute(clear_tables_query)
-
-    # try:
-    #     conn = psycopg2.connect(CONN_STR)
-    #     cursor = conn.cursor()
-    #     cursor.execute(clear_tables_query)
-    #     cursor.close()
-    # except (Exception) as e:
-    #     print(e)
+    try:
+        conn = psycopg2.connect(CONN_STR)
+        cursor = conn.cursor()
+        cursor.execute(clear_tables_query)
+        cursor.close()
+    except (Exception) as e:
+        print(e)
 
 
 def delete_tables():
@@ -175,9 +147,6 @@ def delete_tables():
     DROP TABLE cones;
     """
 
-    # with db_connection() as conn:
-    #     conn.execute(delete_tables_query)
-
     try:
         conn = psycopg2.connect(CONN_STR)
         cursor = conn.cursor()
@@ -187,13 +156,11 @@ def delete_tables():
     except (Exception) as e:
         print(e)
 
-    # with db_connection() as cursor:
-    #     cursor.execute(delete_tables_query)
 
 
 def main():
-    #create_tables()
-    delete_tables()
+    create_tables()
+    # delete_tables()
 
 
 if __name__ == "__main__":
