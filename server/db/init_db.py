@@ -1,3 +1,5 @@
+import argparse
+
 import psycopg2
 
 CONN_STR = "postgres://postgres:password@localhost:5432/postgres"
@@ -138,6 +140,7 @@ def clear_tables():
         conn = psycopg2.connect(CONN_STR)
         cursor = conn.cursor()
         cursor.execute(clear_tables_query)
+        conn.commit()
         cursor.close()
     except (Exception) as e:
         print(e)
@@ -164,11 +167,24 @@ def delete_tables():
     except (Exception) as e:
         print(e)
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help="clear tables")
+    parser.add_argument('-d', '--delete', action='store_true', help="drop tables")
+    parser.add_argument('-i', '--init', action='store_true', help="init tables")
+    parser.set_defaults(clear=False, delete=False, init=False)
+    return parser.parse_args()
 
 
 def main():
-    create_tables()
-    # delete_tables()
+    args = parse_args()
+
+    if args.clear:
+        clear_tables()
+    elif args.delete:
+        delete_tables()
+    elif args.init:
+        create_tables()
 
 
 if __name__ == "__main__":
