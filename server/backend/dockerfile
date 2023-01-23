@@ -1,0 +1,8 @@
+FROM python:3.9-slim-buster
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+COPY ./src /server
+WORKDIR /server
+EXPOSE 50051
+
+ENTRYPOINT ["python3", "f1server.py"]
