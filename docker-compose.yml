@@ -1,6 +1,6 @@
 services:
   grafana:
-    build: client/grafana
+    build: client/
     ports:
       - "3000:3000"
   timescaledb:
