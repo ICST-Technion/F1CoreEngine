@@ -57,12 +57,12 @@ A Technion CS Software-Project "F1 Core Engine" for the Autonomous Formula-1 Tec
 
 ## Initial Setup
 1. Clone this repository:
-> git clone https://github.com/ICST-Technion/F1CoreEngine.git
+`git clone https://github.com/ICST-Technion/F1CoreEngine.git`
 2. Open docker desktop
 3. To initialize the system run the following command within the project directory:
-> docker compose up
+`docker compose up`
 4. To initialize the database run the following command within the project directory:
-> python3 server/db/init_db.py -i
+`python3 server/db/init_db.py -i`
 5. Login to grafana in `localhost:3000` with the credentials `admin:admin` (and if you want you can change the password)
 6. Add a data source:
    1. Go to the `settings > datasources` screen: <img width="1786" alt="image" src="https://user-images.githubusercontent.com/63338501/214157577-48e001cd-f433-4b7b-a16a-c3db5f22d441.png">
@@ -72,7 +72,7 @@ A Technion CS Software-Project "F1 Core Engine" for the Autonomous Formula-1 Tec
       1. Host: `database:5432`, Database: `postgres`, User: `postgres`, Password: `password`
       2. Disable SSL
       3. Choose `PostgreSQL` version 15 and switch to `TimescaleDB`
-      4. Click `Save & Test`<img width="952" alt="image" src="https://user-images.githubusercontent.com/63338501/214157785-b494c80c-0578-43b6-8a81-16175ea47f5f.png">
+      4. Click `Save & Test`<img width="1116" alt="image" src="https://user-images.githubusercontent.com/63338501/214158110-471b8c1b-f763-4e0a-b0fe-3bd1e5ab07df.png">
 
 7. [Import a Dashboard](#Importing-Existing-Dashboards) as per the following instructions.
 
@@ -102,14 +102,14 @@ The logger is a python class with the following class methods that should be use
 # Backing up your Database to .bak file
 
 In order to backup the database from the docker container:
-1. `pg_dump -U postgres -Fc -f <file_name>.bak postgres`
+*. `pg_dump -U postgres -Fc -f <file_name>.bak postgres`
 
 To backup the database from the host machine:
-1. `pg_dump -h localhost -p 5432 -U postgres -Fc -f <file_name>.bak postgres`
+*. `pg_dump -h localhost -p 5432 -U postgres -Fc -f <file_name>.bak postgres`
 
 # Loading Data from .bak file
 * Before Loading the backup file, run the following command (this command will delete all the data on the database, so if you need it it's a good time to [backup](#Backing-up-your-Database-to-bak-file):
-> python3 server/db/init_db.py -d
+`python3 server/db/init_db.py -d`
 
 Assuming you have a .bak backup file, this are the steps to do in order to load and use the data in the file:
 1. Connect to the database, `psql -h localhost -p 5432 -U postgres -d postgres`.
@@ -123,4 +123,4 @@ Assuming you have a .bak backup file, this are the steps to do in order to load 
   `REINDEX DATABASE \<DB\>;`
 
 # Clearing the database (without dropping the tables):
-> python3 server/db/init_db.py -c
+`python3 server/db/init_db.py -c`
