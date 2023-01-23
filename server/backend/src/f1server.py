@@ -21,13 +21,23 @@ class MessagePassingServicer(fservice_pb2_grpc.MessagePassingServicer):
 
     def SimulationStart(self, request, context):
         self.currentSimulation = request.simulationid
-        return MessageAck(ackmessage=f'Simlation {self.currentSimulation} started')
+        self.dbadapter.insert_new_experiment({
+            "exp_id": request.simulationid,
+            "created_at": datetime.datetime.fromtimestamp((timestamp := request.timestamp).seconds + timestamp.nanos / 1e9, tz=datetime.timezone.utc)
+        })
+        return MessageAck(ackmessage=f'Simulation {self.currentSimulation} started')
 
     def SimulationEnd(self, request, context):
+        print(request)
         if request.simulationid != self.currentSimulation:
             return MessageAck(ackmessage=f'Error, simulation {request.simulationid} is not running')
         else:
             self.currentSimulation = request.simulationid
+            self.dbadapter.finish_experiment({
+                "exp_id": request.simulationid,
+                "finished_at": datetime.datetime.fromtimestamp(
+                    (timestamp := request.timestamp).seconds + timestamp.nanos / 1e9, tz=datetime.timezone.utc)
+            })
             return MessageAck(ackmessage=f'Simulation {request.simulationid} ended')
 
     def GetCarState(self, request, context):
@@ -84,6 +94,7 @@ class MessagePassingServicer(fservice_pb2_grpc.MessagePassingServicer):
             my_message = FormulaState()
             any_message.Unpack(my_message)
             dict = {
+                "exp_id": self.currentSimulation,
                 "position_vector": (my_message.current_state.position.x, my_message.current_state.position.y),
                 "position_deviation_vector": (my_message.current_state.position_deviation.x, my_message.current_state.position_deviation.y),
                 "velocity_vector": (my_message.current_state.velocity.x, my_message.current_state.velocity.y),

@@ -3,6 +3,14 @@ from abc import ABC, abstractmethod
 
 class DBAdapter(ABC):
     @abstractmethod
+    def insert_new_experiment(self, params):
+        pass
+
+    @abstractmethod
+    def finish_experiment(self, params):
+        pass
+
+    @abstractmethod
     def insert_into_car_state(self, params):
         pass
 

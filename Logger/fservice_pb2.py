@@ -12,21 +12,25 @@ _sym_db = _symbol_database.Default()
 
 
 import common_pb2 as common__pb2
+import state_est_pb2 as state__est__pb2
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x66service.proto\x12\x1aTechnionFormulaAV.Messages\x1a\x0c\x63ommon.proto\".\n\x16SimulationStartRequest\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\"+\n\x13NotifySimulationEnd\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\" \n\nMessageAck\x12\x12\n\nackmessage\x18\x01 \x01(\t2\xca\x02\n\x0eMessagePassing\x12o\n\x0fSimulationStart\x12\x32.TechnionFormulaAV.Messages.SimulationStartRequest\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x12j\n\rSimulationEnd\x12/.TechnionFormulaAV.Messages.NotifySimulationEnd\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x12[\n\nGetMessage\x12#.TechnionFormulaAV.Messages.Message\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x66service.proto\x12\x1aTechnionFormulaAV.Messages\x1a\x0c\x63ommon.proto\x1a\x0fstate_est.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"]\n\x16SimulationStartRequest\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\x12-\n\ttimestamp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"Z\n\x13NotifySimulationEnd\x12\x14\n\x0csimulationid\x18\x01 \x01(\x05\x12-\n\ttimestamp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\" \n\nMessageAck\x12\x12\n\nackmessage\x18\x01 \x01(\t\"r\n\x16TimedDriveInstructions\x12\x0b\n\x03gas\x18\x01 \x01(\x02\x12\x0e\n\x06\x62rakes\x18\x02 \x01(\x02\x12\x10\n\x08steering\x18\x03 \x01(\x02\x12\x15\n\roptimal_speed\x18\x04 \x01(\x02\x12\x12\n\ntime_stamp\x18\x05 \x01(\x02\x32\xa4\x04\n\x0eMessagePassing\x12o\n\x0fSimulationStart\x12\x32.TechnionFormulaAV.Messages.SimulationStartRequest\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x12j\n\rSimulationEnd\x12/.TechnionFormulaAV.Messages.NotifySimulationEnd\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x12]\n\x0bGetCarState\x12$.TechnionFormulaAV.Messages.CarState\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x12y\n\x19GetTimedDriveInstructions\x12\x32.TechnionFormulaAV.Messages.TimedDriveInstructions\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x12[\n\nGetMessage\x12#.TechnionFormulaAV.Messages.Message\x1a&.TechnionFormulaAV.Messages.MessageAck\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'fservice_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _SIMULATIONSTARTREQUEST._serialized_start=60
-  _SIMULATIONSTARTREQUEST._serialized_end=106
-  _NOTIFYSIMULATIONEND._serialized_start=108
-  _NOTIFYSIMULATIONEND._serialized_end=151
-  _MESSAGEACK._serialized_start=153
-  _MESSAGEACK._serialized_end=185
-  _MESSAGEPASSING._serialized_start=188
-  _MESSAGEPASSING._serialized_end=518
+  _SIMULATIONSTARTREQUEST._serialized_start=110
+  _SIMULATIONSTARTREQUEST._serialized_end=203
+  _NOTIFYSIMULATIONEND._serialized_start=205
+  _NOTIFYSIMULATIONEND._serialized_end=295
+  _MESSAGEACK._serialized_start=297
+  _MESSAGEACK._serialized_end=329
+  _TIMEDDRIVEINSTRUCTIONS._serialized_start=331
+  _TIMEDDRIVEINSTRUCTIONS._serialized_end=445
+  _MESSAGEPASSING._serialized_start=448
+  _MESSAGEPASSING._serialized_end=996
 # @@protoc_insertion_point(module_scope)

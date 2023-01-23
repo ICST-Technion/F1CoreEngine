@@ -30,6 +30,43 @@ class timescaleDBAdapter(Adapter):
         return conn
 
     @override
+    def insert_new_experiment(self, params):
+        insert_new_experiment_query = """
+            INSERT INTO experiments VALUES ({exp_id}, TO_TIMESTAMP('{created_at}', 'YYYY-MM-DD HH24:MI:SS.US'), NULL)
+        """.format(
+            exp_id=params["exp_id"],
+            created_at=params["created_at"]
+        )
+
+        try:
+            self.cursor.execute(insert_new_experiment_query)
+            self.car_state_num += 1
+        except Exception as e:
+            print(e)
+
+        self.conn.commit()
+
+    @override
+    def finish_experiment(self, params):
+        finish_experiment_query = """
+                UPDATE experiments 
+                SET 
+                    finishedAt=TO_TIMESTAMP('{finished_at}', 'YYYY-MM-DD HH24:MI:SS.US')
+                WHERE exp_id = '{exp_id}'
+            """.format(
+            exp_id=params["exp_id"],
+            finished_at=params["finished_at"]
+        )
+
+        try:
+            self.cursor.execute(finish_experiment_query)
+            self.car_state_num += 1
+        except Exception as e:
+            print(e)
+
+        self.conn.commit()
+
+    @override
     def insert_into_car_state(self, params):
         """
         function inserts values into the car_state table
@@ -50,10 +87,11 @@ class timescaleDBAdapter(Adapter):
         :return:
         """
         insert_into_car_state_query = """
-        INSERT INTO car_state VALUES ({state_num}, {position_x}, {position_y}, {position_deviation_x}, {position_deviation_y},
+        INSERT INTO car_state VALUES ({exp_id}, {state_num}, {position_x}, {position_y}, {position_deviation_x}, {position_deviation_y},
         {velocity_x}, {velocity_y}, {velocity_deviation_x}, {velocity_deviation_y}, {theta}, {theta_deviation}, {theta_dot}, 
         {theta_dot_deviation}, {steering_angle}, {steering_angle_deviation}, {acceleration}, {acceleration_deviation}, TO_TIMESTAMP('{time_stamp}', 'YYYY-MM-DD HH24:MI:SS.US'))
         """.format(
+            exp_id=params["exp_id"],
             state_num=self.car_state_num,
             position_x=params["position_vector"][0],
             position_y=params["position_vector"][1],

@@ -35,6 +35,7 @@ class Logger:
         cls.simid = simid
         startMsg = messages.SimulationStartRequest()
         startMsg.simulationid = simid
+        startMsg.timestamp.GetCurrentTime()
         if cls.stub is None:
             raise Logger.ExpectedOpenConnection()
         ack = cls.stub.SimulationStart(startMsg)
@@ -44,9 +45,10 @@ class Logger:
     def endExperiment(cls):
         endMsg = messages.NotifySimulationEnd()
         endMsg.simulationid = cls.simid
+        endMsg.timestamp.GetCurrentTime()
         if cls.stub is None:
             raise Logger.ExpectedOpenConnection()
-        ack = cls.stub.SimulationStart(endMsg)
+        ack = cls.stub.SimulationEnd(endMsg)
         cls.messages.append(ack.ackmessage)
         cls.simid = None
 

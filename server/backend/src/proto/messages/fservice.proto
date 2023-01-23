@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package TechnionFormulaAV.Messages;
+
+import "common.proto";
+import "state_est.proto";
+
+service MessagePassing {
+
+  // SimulationStart
+  //
+  // Unary RPC, the server gets a simulation request with an ID from the client.
+  // The server starts the simulation, and sends a flag to the client notifing whether the simulation started
+  // succesfully or not.
+  rpc SimulationStart(SimulationStartRequest) returns (MessageAck) {}
+
+  // SimulationEnd
+  //
+  // Unary RPC, the server gets a simulation end notifiaction with an ID from the client.
+  // The server ends the simulation, and sends a flag to the client notifing whether the simulation ended
+  // succesfully or not.
+  rpc SimulationEnd(NotifySimulationEnd) returns (MessageAck) {}
+
+
+  rpc GetCarState(CarState) returns (MessageAck) {}
+
+  rpc GetTimedDriveInstructions(TimedDriveInstructions) returns (MessageAck) {}
+
+  rpc GetMessage(Message) returns (MessageAck) {}
+
+}
+
+// SimulationStartRequest
+//
+// Sent from the client when they want to start a simulation
+message SimulationStartRequest {
+  // ID of the simulation
+  int32 simulationid = 1;
+}
+
+// NotifySimulationEnd
+//
+// Sent from the client when they want to notify the server
+// that the simulation ended
+message NotifySimulationEnd {
+  // ID of the simulation
+  int32 simulationid = 1;
+}
+
+message MessageAck {
+  string ackmessage = 1;
+}
+
+message TimedDriveInstructions
+{
+    float gas = 1;              /// Goes from 0 to 1.0
+    float brakes = 2;           /// Goes from 0 to 1.0
+    float steering = 3;         /// Goes from -1.0 to 1.0
+    float optimal_speed = 4;    /// values are in [m/sec]. Range: should be 0 to 80[km/h] 
+    float time_stamp = 5;        //  values are in seconds
+}
