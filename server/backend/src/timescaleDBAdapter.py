@@ -1,4 +1,5 @@
 import os
+import time
 
 import psycopg2
 from DBAdapter import DBAdapter as Adapter
@@ -10,9 +11,23 @@ class timescaleDBAdapter(Adapter):
         # super.__init__()
         # self.connection_string = "postgres://postgres:password@localhost:5432/formulaDB"
         self.connection_string = f"postgres://postgres:password@database:5432/postgres"
-        self.conn = psycopg2.connect(self.connection_string)
+        self.conn = self._connect()
         self.cursor = self.conn.cursor()
         self.car_state_num = 0
+
+    def _connect(self):
+        timeout = 0.1
+        while True:
+            try:
+                conn = psycopg2.connect(self.connection_string)
+                break
+            except psycopg2.OperationalError:
+                print(f"Could not connect to database, trying in {timeout} seconds")
+                time.sleep(timeout)
+                timeout *= 2
+                if timeout > 30:
+                    raise
+        return conn
 
     @override
     def insert_into_car_state(self, params):
