@@ -65,14 +65,15 @@ A Technion CS Software-Project "F1 Core Engine" for the Autonomous Formula-1 Tec
 > python3 server/db/init_db.py -i
 5. Login to grafana in `localhost:3000` with the credentials `admin:admin` (and if you want you can change the password)
 6. Add a data source:
-   1. Go to the `settings > datasources` screen: # TODO: need to add image
+   1. Go to the `settings > datasources` screen: <img width="1786" alt="image" src="https://user-images.githubusercontent.com/63338501/214157577-48e001cd-f433-4b7b-a16a-c3db5f22d441.png">
    2. Click `Add data source` button.
-   3. Search `postgres` in the search bar:  # TODO: need to add image
-   4. Fill the information as shown:
+   3. Search `postgres` in the search bar:  <img width="1780" alt="image" src="https://user-images.githubusercontent.com/63338501/214157678-09ac98c5-2abd-449c-b499-ab624219a578.png">
+   4. Fill the information as shown: 
       1. Host: `database:5432`, Database: `postgres`, User: `postgres`, Password: `password`
       2. Disable SSL
       3. Choose `PostgreSQL` version 15 and switch to `TimescaleDB`
-      4. Click `Save & Test`
+      4. Click `Save & Test`<img width="952" alt="image" src="https://user-images.githubusercontent.com/63338501/214157785-b494c80c-0578-43b6-8a81-16175ea47f5f.png">
+
 7. [Import a Dashboard](#Importing-Existing-Dashboards) as per the following instructions.
 
 
@@ -107,7 +108,7 @@ To backup the database from the host machine:
 1. `pg_dump -h localhost -p 5432 -U postgres -Fc -f <file_name>.bak postgres`
 
 # Loading Data from .bak file
-* Before Loading the backup file, run the following command (this command will delete all the data on the database, so if you need it it's a good time to [backup](#Backing-up-your-Database-to-.bak-file):
+* Before Loading the backup file, run the following command (this command will delete all the data on the database, so if you need it it's a good time to [backup](#Backing-up-your-Database-to-bak-file):
 > python3 server/db/init_db.py -d
 
 Assuming you have a .bak backup file, this are the steps to do in order to load and use the data in the file:
