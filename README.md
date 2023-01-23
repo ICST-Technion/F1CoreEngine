@@ -77,7 +77,7 @@ A Technion CS Software-Project "F1 Core Engine" for the Autonomous Formula-1 Tec
 7. [Import a Dashboard](#Importing-Existing-Dashboards) as per the following instructions.
 
 
-### Importing Existing Dashboards
+## Importing Existing Dashboards
 In this section we will go over how to reproduce the Grafana Server on new systems
 that have cloned this project. In the section we assume the following has already been done:
 * This project's repository has been cloned on the local machine. 
@@ -92,14 +92,14 @@ that have cloned this project. In the section we assume the following has alread
 7. This process should be repeated for all dashboard files in that folder.
 8. You should now have all of the required dashboards available in your server.
 
-# Using the logger to send messages:
+## Using the logger to send messages:
 The logger is a python class with the following class methods that should be used in the following order:
 * `Connect` - Initialize a connection with the System.
 * `NewExperiment` - Declares that the following messages will be send from a new experiment.
 * Use `Logger.log(<proto message containing the data of type Message>)`
 * `EndExperiment` - Declares that the experiment has ended.
 
-# Backing up your Database to .bak file
+## Backing up your Database to .bak file
 
 In order to backup the database from the docker container:
 *. `pg_dump -U postgres -Fc -f <file_name>.bak postgres`
@@ -107,7 +107,7 @@ In order to backup the database from the docker container:
 To backup the database from the host machine:
 *. `pg_dump -h localhost -p 5432 -U postgres -Fc -f <file_name>.bak postgres`
 
-# Loading Data from .bak file
+## Loading Data from .bak file
 * Before Loading the backup file, run the following command (this command will delete all the data on the database, so if you need it it's a good time to [backup](#Backing-up-your-Database-to-bak-file):
 `python3 server/db/init_db.py -d`
 
@@ -122,5 +122,5 @@ Assuming you have a .bak backup file, this are the steps to do in order to load 
 5. Optinal - Reindex your database to improve query performance:
   `REINDEX DATABASE \<DB\>;`
 
-# Clearing the database (without dropping the tables):
+### Clearing the database (without dropping the tables):
 `python3 server/db/init_db.py -c`
