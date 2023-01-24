@@ -5,6 +5,7 @@ services:
       - "3000:3000"
   database:
     build: server/db
+    command: /initialization/restore_init.sh &
     ports:
       - "5432:5432"
     environment:

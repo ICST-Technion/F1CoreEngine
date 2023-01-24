@@ -1,0 +1,4 @@
+SELECT timescaledb_pre_restore();
+\! pg_restore -U postgres -Fc -d postgres /initialization/init.bak
+SELECT timescaledb_post_restore();
+REINDEX DATABASE postgres;

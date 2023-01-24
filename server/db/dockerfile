@@ -1,1 +1,4 @@
 FROM timescale/timescaledb:latest-pg15
+COPY initialization/ /initialization
+USER root
+RUN chmod 777 initialization/restore_init.sh
